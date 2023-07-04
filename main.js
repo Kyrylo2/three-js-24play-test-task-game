@@ -143,7 +143,7 @@ function generatorLoadBackGroundCube(quantity, side) {
 
 function loadWaterBackground() {
   const textureLoader = new THREE.TextureLoader();
-  const waterTexture = textureLoader.load('./src/assets/textures/water.jpg');
+  const waterTexture = textureLoader.load('/assets/textures/water.jpg');
   waterTexture.wrapS = THREE.RepeatWrapping;
   waterTexture.wrapT = THREE.RepeatWrapping;
   waterTexture.repeat.set(100, 100);
@@ -210,7 +210,7 @@ function loadWaterBackground() {
 
 function loadBackGroundCube(sideSize = 3, side = 'left') {
   const textureLoader = new THREE.TextureLoader();
-  const texture = textureLoader.load('./src/assets/textures/crate.gif');
+  const texture = textureLoader.load('/assets/textures/crate.gif');
   // texture.colorSpace = THREE.sRGBEncoding;
 
   const cubePositionZ =
@@ -257,7 +257,7 @@ function loadBackGroundCube(sideSize = 3, side = 'left') {
 }
 
 function loadTrack() {
-  loader.load('./src/assets/models/TrackFloor.glb', (gltf) => {
+  loader.load('/assets/models/TrackFloor.glb', (gltf) => {
     const track = gltf.scene;
 
     track.traverse((node) => {
@@ -288,7 +288,7 @@ function loadTrack() {
 }
 
 function loadStickMan(action) {
-  loader.load('./src/assets/models/Stickman.glb', (gltf) => {
+  loader.load('/assets/models/Stickman.glb', (gltf) => {
     stickMan = gltf.scene;
 
     stickManAnimations = gltf.animations;
@@ -325,7 +325,7 @@ function loadStickMan(action) {
 }
 
 function loadBrainEnemy() {
-  loader.load('./src/assets/models/Brain.glb', (gltf) => {
+  loader.load('/assets/models/Brain.glb', (gltf) => {
     totalBrainEnemies += 1;
     const brainEnemy = gltf.scene;
     const randomPositionX = getRandomPosition();
@@ -356,7 +356,7 @@ function loadBrainEnemy() {
 
     const fontLoader = new FontLoader();
 
-    fontLoader.load('/src/helvetiker_bold.typeface.json', function (font) {
+    fontLoader.load('/helvetiker_bold.typeface.json', function (font) {
       const textGeometry = new TextGeometry(randomValue.toString(), {
         font: font,
         size: 1,
