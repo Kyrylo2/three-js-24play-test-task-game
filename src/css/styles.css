@@ -1,0 +1,58 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Bungee Spice', cursive;
+  /* font-family: 'Roboto', sans-serif; */
+}
+
+#game-score-container {
+  position: absolute;
+  font-size: 30px;
+  top: 30px;
+  color: white;
+  /* top: ; */
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#game-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#tutorial {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 999;
+}
+
+#finger {
+  width: 100px;
+  height: 100px;
+  background-image: url(/src/assets/Tutorial_Hand.png);
+  background-size: cover;
+  animation: fingerAnimation 1s ease-in-out infinite alternate;
+}
+
+#text {
+  margin-top: 20px;
+  font-size: 24px;
+  color: black;
+}
+
+@keyframes fingerAnimation {
+  0% {
+    transform: translateX(-50px);
+  }
+  100% {
+    transform: translateX(50px);
+  }
+}
