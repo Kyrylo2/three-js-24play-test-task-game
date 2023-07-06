@@ -7,6 +7,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 // Змінні
 const container = document.getElementById('game-container');
+
 const totalScoreContainer = document.getElementById('game-score-container');
 const loader = new GLTFLoader();
 const clock = new THREE.Clock();
@@ -25,6 +26,7 @@ let totalPositiveBrainsPicked = 0;
 let leftCubePositionZ = 0;
 let rightCubePositionZ = 0;
 
+let isGameStarted = false; // true by default
 let isGameEnds = false;
 
 let color = 0xff9c7c;
@@ -44,6 +46,42 @@ function handleKeyPress(event) {
     }
   }
 }
+
+// Обробка свайпу пальцем
+
+let touchstartX = 0;
+let touchendX = 0;
+
+function checkDirection() {
+  if (!isGameEnds) {
+    if (touchendX < touchstartX) {
+      if (targetX < 3) {
+        targetX += 3;
+      }
+    } else if (touchendX > touchstartX) {
+      if (targetX > -3) {
+        targetX -= 3;
+      }
+    }
+  }
+}
+
+if (!isGameStarted) {
+  document.addEventListener('click', () => {
+    isGameStarted = true;
+    document.getElementById('tutorial').style.display = 'none';
+    document.getElementById('tutorial').style.visibility = 'hidden';
+  });
+}
+
+document.addEventListener('touchstart', (e) => {
+  touchstartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener('touchend', (e) => {
+  touchendX = e.changedTouches[0].screenX;
+  checkDirection();
+});
 
 // Ініціалізація сцени, камери
 const scene = new THREE.Scene();
@@ -65,7 +103,7 @@ renderer.shadowMap.autoUpdate = true;
 // renderer.shadowMap.needsUpdate = true;
 container.appendChild(renderer.domElement);
 
-const controls = new OrbitControls(camera, renderer.domElement);
+// const controls = new OrbitControls(camera, renderer.domElement);
 
 // Додаткові налаштування камери
 const cameraDistance = 20;
@@ -123,7 +161,7 @@ function loadModels() {
   loadStickMan(action);
 
   //Load Brain Enemy
-  loadBrainEnemy();
+  // loadBrainEnemy();
 
   //Load Cubs for background
   generatorLoadBackGroundCube(40, 'left');
@@ -360,7 +398,7 @@ function loadBrainEnemy() {
       const textGeometry = new TextGeometry(randomValue.toString(), {
         font: font,
         size: 1,
-        height: 1,
+        height: 0.1,
         bevelThickness: 1,
         // curveSegments: 12,
       });
@@ -538,7 +576,7 @@ function animate() {
 
   // Генерація нового Brain кожну секунду
   // console.log(isGameEnds);
-  if (!isGameEnds) {
+  if (!isGameEnds && isGameStarted) {
     if (elapsedSeconds > 1) {
       loadBrainEnemy();
       clock.start(); // Перезапуск годинника
@@ -587,7 +625,7 @@ function animate() {
     });
   }
 
-  controls.update();
+  // controls.update();
 
   renderer.render(scene, camera);
 }

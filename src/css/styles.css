@@ -14,6 +14,7 @@ body {
   /* top: ; */
   left: 50%;
   transform: translate(-50%, -50%);
+  min-width: max-content;
 }
 
 #game-container {
@@ -37,7 +38,7 @@ body {
 #finger {
   width: 100px;
   height: 100px;
-  background-image: url(/src/assets/Tutorial_Hand.png);
+  background-image: url(/public/assets/Tutorial_Hand.png);
   background-size: cover;
   animation: fingerAnimation 1s ease-in-out infinite alternate;
 }
@@ -46,6 +47,8 @@ body {
   margin-top: 20px;
   font-size: 24px;
   color: black;
+  text-align: center;
+  min-width: max-content;
 }
 
 @keyframes fingerAnimation {
