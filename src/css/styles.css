@@ -38,7 +38,7 @@ body {
 #finger {
   width: 100px;
   height: 100px;
-  background-image: url(/public/assets/Tutorial_Hand.png);
+  background-image: url(/assets/Tutorial_Hand.png);
   background-size: cover;
   animation: fingerAnimation 1s ease-in-out infinite alternate;
 }

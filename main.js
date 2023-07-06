@@ -20,6 +20,7 @@ let brainEnemyTargetZ = -30;
 let totalBrainEnemies = 0;
 let brainsArray = [];
 let textMeshArray = [];
+
 let totalUsersScore = 0;
 let totalPositiveBrainsPicked = 0;
 
@@ -90,7 +91,7 @@ scene.background = new THREE.Color(0xaaccff);
 scene.fog = new THREE.FogExp2(0xaaccff, 0.0007);
 
 const camera = new THREE.PerspectiveCamera(
-  75,
+  60,
   window.innerWidth / window.innerHeight,
   0.1,
   1000
@@ -330,7 +331,6 @@ function loadStickMan(action) {
     stickMan = gltf.scene;
 
     stickManAnimations = gltf.animations;
-    console.log(stickManAnimations);
 
     stickMan.traverse((node) => {
       if (node.isMesh && node.name === 'Stickman') {
@@ -400,7 +400,7 @@ function loadBrainEnemy() {
         size: 1,
         height: 0.1,
         bevelThickness: 1,
-        // curveSegments: 12,
+        curveSegments: 12,
       });
 
       const matLite = new THREE.MeshStandardMaterial({
@@ -415,6 +415,8 @@ function loadBrainEnemy() {
       text.position.copy(brainEnemy.position);
 
       textMeshArray.push(text);
+
+      text.rotateY(3);
 
       scene.add(text);
     });
@@ -455,6 +457,7 @@ function checkCollisions() {
     for (let i = brainsArray.length - 1; i >= 0; i--) {
       const brainEnemy = brainsArray[i];
       const textMesh = textMeshArray[i];
+
       const brainEnemyBox = new THREE.Box3().setFromObject(brainEnemy);
 
       if (stickManBox.intersectsBox(brainEnemyBox)) {
@@ -496,8 +499,7 @@ function checkCollisions() {
 
           mixer.addEventListener('finished', () => {
             idleAction.stop();
-            console.log('Finished animating');
-            console.log(idleAction, mixer);
+
             idleClip = THREE.AnimationClip.findByName(
               stickManAnimations,
               'Run'
@@ -551,11 +553,6 @@ function animate() {
 
         idleAction.play();
 
-        // mixer.addEventListener('finished', () => {
-        //   mixer.stopAllAction();
-        //   console.log('game ended');
-        // });
-
         totalScoreContainer.innerHTML = `Game Over! You picked ${totalPositiveBrainsPicked} good brains in this game!`;
       }
       mixer.update(delta);
@@ -575,7 +572,7 @@ function animate() {
   }
 
   // Генерація нового Brain кожну секунду
-  // console.log(isGameEnds);
+
   if (!isGameEnds && isGameStarted) {
     if (elapsedSeconds > 1) {
       loadBrainEnemy();
